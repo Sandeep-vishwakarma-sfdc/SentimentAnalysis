@@ -24,12 +24,3 @@ class TweetAnalyzer():
     def tweets_to_data_frame(self,tweets):
         df = pd.DataFrame(data=[tweet.text for tweet in tweets], columns=['Tweets'])
         return df
-
-# if __name__ == "__main__":
-#    twitter_client = Twitterclient()
-#    tweet_analyzer = TweetAnalyzer()
-#    api = twitter_client.get_twitter_client_api()
-#    tweets = api.user_timeline(screen_name="elonmusk",count="10")
-#    df = tweet_analyzer.tweets_to_data_frame(tweets)
-#    df.to_csv('test.csv')
-#    print(df.head(5))
