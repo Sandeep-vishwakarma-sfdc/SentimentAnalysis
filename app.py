@@ -38,7 +38,7 @@ def analyseEmotions(tweets):
             final_word.append(word)
     emotion_list = []
 
-    with open('./static/emotions.csv','r') as file:
+    with open('./static/emotions.csv','r',encoding='latin-1') as file:
         for line in file:
             clear_line = line.replace('\n','').replace("'",'').strip()
             word,emotion = clear_line.split(',')
