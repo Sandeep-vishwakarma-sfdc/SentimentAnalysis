@@ -8,19 +8,24 @@ tweet=""
 @app.route("/",methods=['POST','GET'])
 def home():
     if request.method=='POST':
-        username = request.form['username'] 
-        count = request.form.get('noOfTweets')
-        twitter_client1 = Twitterclient()
-        api = twitter_client1.get_twitter_client_api()
-        tweets = api.user_timeline(screen_name=username,count=count)
-        emotionlist, w = analyseEmotions(tweets=tweets)
-        labels = []
-        for label in w.keys():
-            labels.append(label)
-        data = [] 
-        for val in w.values():
-            data.append(val)
-        return render_template("index.html",tweets=tweets,labels=labels,data=data)
+        username = request.form['username']
+        print('user name ---->'+username)
+        if len(username)!=0:
+            count = request.form.get('noOfTweets')
+            twitter_client1 = Twitterclient()
+            api = twitter_client1.get_twitter_client_api()
+            tweets = api.user_timeline(screen_name=username,count=count)
+            emotionlist, w = analyseEmotions(tweets=tweets)
+            labels = []
+            for label in w.keys():
+                labels.append(label)
+            data = [] 
+            for val in w.values():
+                data.append(val)
+            print(tweets)
+            return render_template("index.html",tweets=tweets,labels=labels,data=data,username=username)
+        else:
+            return render_template("index.html",tweets=[],labels=[],data=[],username=username)
     else:
         return render_template("index.html",tweet='no tweet available')
 
@@ -51,8 +56,5 @@ def analyseEmotions(tweets):
 
 
 if __name__=='__main__':
-    # df = tweet_analyzer.tweets_to_data_frame(tweets)
-    # df.to_csv('test.csv')
-    # print(df.head(5))
     app.run(debug=True)
     
